@@ -81,6 +81,8 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border px-3 py-2 rounded"
+          placeholder="e.g., Fix login bug"
+          autoComplete="off"
           required
         />
       </div>
@@ -96,6 +98,7 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border px-3 py-2 rounded resize-none"
           rows={3}
+          placeholder="Optional: add details, links, or notes..."
         />
       </div>
 
@@ -114,6 +117,9 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
           <option value="medium">Medium</option>
           <option value="high">High</option>
         </select>
+        <p className="text-xs text-gray-500 mt-1">
+          Default is Medium — change if needed.
+        </p>
       </div>
 
       {/* Submit Button */}
