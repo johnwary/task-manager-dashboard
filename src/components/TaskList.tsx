@@ -1,12 +1,13 @@
 import { useTaskContext } from '../hooks/useTaskContext';
 import { TaskItem } from './TaskItem';
+import { EmptyState } from './EmptyState';
 import type { Task } from '../types/task';
 
-export const TaskList = ({
-  onEditTask,
-}: {
+interface Props {
   onEditTask: (task: Task) => void;
-}) => {
+}
+
+export const TaskList = ({ onEditTask }: Props) => {
   const { state } = useTaskContext();
   const { tasks, filter, search } = state;
 
@@ -19,7 +20,7 @@ export const TaskList = ({
   });
 
   if (filteredTasks.length === 0) {
-    return <p className="text-center text-gray-500 mt-10">No tasks found.</p>;
+    return <EmptyState />;
   }
 
   return (

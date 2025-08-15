@@ -55,23 +55,27 @@ function reducer(state: State, action: Action): State {
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const [loaded, setLoaded] = useState(false); // 👈 New
+  const [loaded, setLoaded] = useState(false); // ✅ INSIDE
+  const [error, setError] = useState<string | null>(null); // ✅ INSIDE
 
-  // ✅ Load tasks from localStorage on mount
   useEffect(() => {
-    const stored = localStorage.getItem('tasks');
-    if (stored) {
-      try {
+    try {
+      const stored = localStorage.getItem('tasks');
+      if (stored) {
         const parsed = JSON.parse(stored) as Task[];
         dispatch({ type: 'SET_INITIAL_TASKS', payload: parsed });
-      } catch {
-        console.error('Failed to parse localStorage');
       }
+    } catch {
+      console.error('Failed to load tasks');
+      setError('Failed to load saved tasks.');
+    } finally {
+      // Simulate short load delay
+      setTimeout(() => {
+        setLoaded(true);
+      }, 500);
     }
-    setLoaded(true); // 👈 Only show UI after this
   }, []);
 
-  // ✅ Save to localStorage on task updates
   useEffect(() => {
     if (loaded) {
       localStorage.setItem('tasks', JSON.stringify(state.tasks));
@@ -80,7 +84,11 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
 
-  if (!loaded) return null; // 👈 Prevent rendering app until tasks are loaded
+  if (!loaded)
+    return <div className="text-center mt-10 text-sm">Loading tasks...</div>;
+
+  if (error)
+    return <div className="text-center mt-10 text-red-500">{error}</div>;
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
