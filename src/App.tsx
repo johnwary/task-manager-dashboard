@@ -1,6 +1,7 @@
 import { TaskList } from './components/TaskList';
 import { TaskForm } from './components/TaskForm';
 import { SearchBar } from './components/SearchBar';
+import { FilterTabs } from './components/FilterTabs';
 
 function App() {
   return (
@@ -9,6 +10,7 @@ function App() {
         <h1 className="text-2xl font-bold mb-6">Task Dashboard</h1>
         <TaskForm />
         <SearchBar />
+        <FilterTabs />
         <TaskList />
       </main>
     </>
