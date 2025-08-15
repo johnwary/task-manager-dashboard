@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { TaskList } from './components/TaskList';
+// import { TaskList } from './components/TaskList';
 import { TaskForm } from './components/TaskForm';
 import { SearchBar } from './components/SearchBar';
 import { FilterTabs } from './components/FilterTabs';
 import { TaskCounter } from './components/TaskCounter';
+import { EnhancedTaskList } from './components/EnhancedTaskList';
 import type { Task } from './types/task';
 
 function App() {
@@ -23,7 +24,7 @@ function App() {
         <SearchBar />
         <FilterTabs />
         <TaskCounter />
-        <TaskList onEditTask={setEditingTask} />
+        <EnhancedTaskList onEditTask={setEditingTask} isLoading={false} />
       </section>
     </main>
   );
