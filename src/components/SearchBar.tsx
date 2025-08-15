@@ -15,7 +15,7 @@ export const SearchBar = () => {
         type="text"
         value={state.search}
         onChange={handleChange}
-        placeholder="Search tasks..."
+        placeholder="Search by title…"
         className="w-full border px-3 py-2 rounded mb-4"
         aria-label="Search tasks"
       />
