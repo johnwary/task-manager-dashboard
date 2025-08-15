@@ -10,20 +10,25 @@ export const FilterTabs = () => {
   };
 
   return (
-    <div className="flex gap-2 mb-4">
-      {filters.map((filter) => (
-        <button
-          key={filter}
-          onClick={() => handleClick(filter)}
-          className={`px-3 py-1 rounded border text-sm capitalize ${
-            state.filter === filter
-              ? 'bg-blue-600 text-white'
-              : 'bg-gray-100 hover:bg-gray-200'
-          }`}
-        >
-          {filter}
-        </button>
-      ))}
+    <div className="flex gap-2 mb-4" role="tablist" aria-label="Task filters">
+      {filters.map((filter) => {
+        const isActive = state.filter === filter;
+        return (
+          <button
+            key={filter}
+            onClick={() => handleClick(filter)}
+            role="tab"
+            aria-selected={isActive}
+            className={`px-3 py-1 rounded border text-sm capitalize transition ${
+              isActive
+                ? 'bg-blue-600 text-white'
+                : 'bg-gray-100 hover:bg-gray-200'
+            }`}
+          >
+            {filter}
+          </button>
+        );
+      })}
     </div>
   );
 };
