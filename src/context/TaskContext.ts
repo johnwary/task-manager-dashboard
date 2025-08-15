@@ -15,7 +15,8 @@ export type Action =
   | { type: 'REMOVE'; payload: string }
   | { type: 'TOGGLE'; payload: string }
   | { type: 'SET_SEARCH'; payload: string }
-  | { type: 'SET_FILTER'; payload: Filter };
+  | { type: 'SET_FILTER'; payload: Filter }
+  | { type: 'SET_INITIAL_TASKS'; payload: Task[] };
 
 export const initialState: State = {
   tasks: [],
