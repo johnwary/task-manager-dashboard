@@ -45,8 +45,13 @@ Architecture & Best Practices (Part 2)
    ARIA-friendly practices in counter and form controls
    Focused styling for buttons and state changes
 
-TECH STACK
+4. Advanced Patterns (Part 3)
 
+   Compound Components – `TaskCard` was built using the compound component pattern with `<TaskCard.Header />`, `<TaskCard.Body />`, and `<TaskCard.Actions />`, allowing flexible task layout reuse.
+
+   Higher-Order Component (HOC) – `withLoading(Component)` was implemented to provide loading state support to any component (e.g., `TaskList`), displaying fallback UI when needed.
+
+TEACH STACK
 React - UI & component structure
 TypeScript - Static typing
 Vite - Lightning-fast dev server
