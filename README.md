@@ -1,4 +1,5 @@
-Task Management Dashboard
+# Task Management Dashboard
+
 A clean, production-ready task management app built with Vite + React + TypeScript + TailwindCSS.
 
 ✅ Features (Completed in Part 1 & 2)
@@ -14,16 +15,17 @@ Core Features:
     ✅ Task counter showing Total, Completed, Remaining
     ✅ Tasks persist via localStorage
 
-Task object structure
+### Task Object Structure
 
+```ts
 {
-id: string;
-title: string;
-description: string;
-status: 'active' | 'completed';
-priority: 'low' | 'medium' | 'high';
-createdAt: Date;
-updatedAt: Date;
+  id: string;
+  title: string;
+  description: string;
+  status: 'active' | 'completed';
+  priority: 'low' | 'medium' | 'high';
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 Architecture & Best Practices (Part 2)
@@ -51,13 +53,14 @@ Architecture & Best Practices (Part 2)
 
    Higher-Order Component (HOC) – `withLoading(Component)` was implemented to provide loading state support to any component (e.g., `TaskList`), displaying fallback UI when needed.
 
-TEACH STACK
-React - UI & component structure
-TypeScript - Static typing
-Vite - Lightning-fast dev server
-TailwindCSS -Utility-first styling
-React Context + useReducer - Global state management
-localStorage - Persisting tasks across sessions
+## Tech Stack
+
+- **React** – UI & component structure
+- **TypeScript** – Static typing
+- **Vite** – Lightning-fast dev server
+- **TailwindCSS** – Utility-first styling
+- **React Context + useReducer** – Global state management
+- **localStorage** – Persisting tasks across sessions
 
 # 1. Clone the repo
 
@@ -71,3 +74,4 @@ npm install
 # 3. Start the dev server
 
 npm run dev
+```
