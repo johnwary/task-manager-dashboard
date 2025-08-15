@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useTaskContext } from '../hooks/useTaskContext';
 import type { TaskPriority, Task } from '../types/task';
-
-const generateId = () => Date.now().toString();
+import { generateId } from '../utils/generateId';
 
 interface Props {
   editingTask: Task | null;
@@ -11,10 +10,12 @@ interface Props {
 
 export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
   const { dispatch } = useTaskContext();
+
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<TaskPriority>('medium');
 
+  // Autofill fields when editing
   useEffect(() => {
     if (editingTask) {
       setTitle(editingTask.title);
@@ -23,7 +24,8 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
     }
   }, [editingTask]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  // Handle form submit (Add or Update)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!title.trim()) return;
 
@@ -56,16 +58,25 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
       });
     }
 
+    // Reset fields
     setTitle('');
     setDescription('');
     setPriority('medium');
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4 mb-6">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4 mb-6"
+      aria-label="Task form"
+    >
+      {/* Title Field */}
       <div>
-        <label className="block font-medium">Title</label>
+        <label htmlFor="title" className="block font-medium">
+          Title
+        </label>
         <input
+          id="title"
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
@@ -74,9 +85,13 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
         />
       </div>
 
+      {/* Description Field */}
       <div>
-        <label className="block font-medium">Description</label>
+        <label htmlFor="description" className="block font-medium">
+          Description
+        </label>
         <textarea
+          id="description"
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border px-3 py-2 rounded resize-none"
@@ -84,9 +99,13 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
         />
       </div>
 
+      {/* Priority Field */}
       <div>
-        <label className="block font-medium">Priority</label>
+        <label htmlFor="priority" className="block font-medium">
+          Priority
+        </label>
         <select
+          id="priority"
           value={priority}
           onChange={(e) => setPriority(e.target.value as TaskPriority)}
           className="w-full border px-3 py-2 rounded"
@@ -97,9 +116,11 @@ export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
         </select>
       </div>
 
+      {/* Submit Button */}
       <button
         type="submit"
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+        aria-label={editingTask ? 'Update Task' : 'Add Task'}
       >
         {editingTask ? 'Update Task' : 'Add Task'}
       </button>
