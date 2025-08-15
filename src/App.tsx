@@ -10,9 +10,12 @@ function App() {
   const [editingTask, setEditingTask] = useState<Task | null>(null);
 
   return (
-    <>
-      <main className="max-w-2xl mx-auto py-10 px-4">
+    <main className="max-w-2xl mx-auto py-10 px-4">
+      <header>
         <h1 className="text-2xl font-bold mb-6">Task Dashboard</h1>
+      </header>
+      <section>
+        {' '}
         <TaskForm
           editingTask={editingTask}
           onFinishEdit={() => setEditingTask(null)}
@@ -21,8 +24,8 @@ function App() {
         <FilterTabs />
         <TaskCounter />
         <TaskList onEditTask={setEditingTask} />
-      </main>
-    </>
+      </section>
+    </main>
   );
 }
 
