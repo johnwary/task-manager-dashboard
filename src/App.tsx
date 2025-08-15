@@ -2,6 +2,7 @@ import { TaskList } from './components/TaskList';
 import { TaskForm } from './components/TaskForm';
 import { SearchBar } from './components/SearchBar';
 import { FilterTabs } from './components/FilterTabs';
+import { TaskCounter } from './components/TaskCounter';
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
         <TaskForm />
         <SearchBar />
         <FilterTabs />
+        <TaskCounter />
         <TaskList />
       </main>
     </>
