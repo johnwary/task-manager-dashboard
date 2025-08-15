@@ -1,34 +1,68 @@
-# 🧩 Task Management Dashboard – Part 1: Core Implementation
+Task Management Dashboard
+A clean, production-ready task management app built with Vite + React + TypeScript + TailwindCSS.
 
-This is **Part 1** of a modular React Task Management App, built with **Vite + React + TypeScript + Tailwind CSS**.
+✅ Features (Completed in Part 1 & 2)
 
-It includes all the core features expected from a basic task manager with clean architecture, state management, and essential UI.
+Core Features:
 
----
+    ✅ Add new tasks with title, description, priority
+    ✅ Edit existing tasks inline
+    ✅ Delete tasks with one click
+    ✅ Toggle task status (Active / Completed)
+    ✅ Filter tasks by status (All, Active, Completed)
+    ✅ Search tasks by title
+    ✅ Task counter showing Total, Completed, Remaining
+    ✅ Tasks persist via localStorage
 
-## ✅ Core Features Implemented
+Task object structure
 
-- 📋 **Task List** – Show all tasks
-- ➕ **Add Task** – Create new tasks
-- ✏️ **Edit Task** – Update task title, description, and priority
-- ❌ **Delete Task** – Remove tasks
-- 🎯 **Toggle Status** – Mark task as `active` or `completed`
-- 🟢 **Filter Tasks** – View All / Active / Completed tasks
-- 🔍 **Search** – Filter tasks by title (case-insensitive)
-- 🔢 **Task Counter** – Show total, completed, and remaining
-- 💾 **LocalStorage** – Tasks persist after refresh
+{
+id: string;
+title: string;
+description: string;
+status: 'active' | 'completed';
+priority: 'low' | 'medium' | 'high';
+createdAt: Date;
+updatedAt: Date;
+}
 
----
+Architecture & Best Practices (Part 2)
 
-## 🧠 Tech Stack
+1. Clean Code
 
-- **React** (function components only)
-- **TypeScript**
-- **Vite**
-- **Tailwind CSS**
-- **Context API** + `useReducer` (global state)
-- **LocalStorage** (persistence)
+   Components are small, reusable, and focused
+   Clear variable names and readable logic
+   All reusable hooks (useTaskContext) and helpers (generateId) are abstracted properly
+   File structure is organized into components/, context/, hooks/, types/, utils/
 
----
+2. Error & Loading Handling
+   Graceful fallback UI for: - Task loading from localStorage - LocalStorage read/write failures - Empty task state via EmptyState component
+   Feedback UX: Loading tasks..., error display, empty task message
 
-## 📁 Project Structure
+3. Accessibility
+   Semantic HTML for buttons, lists, headings
+   Keyboard-accessible components
+   ARIA-friendly practices in counter and form controls
+   Focused styling for buttons and state changes
+
+TECH STACK
+
+React - UI & component structure
+TypeScript - Static typing
+Vite - Lightning-fast dev server
+TailwindCSS -Utility-first styling
+React Context + useReducer - Global state management
+localStorage - Persisting tasks across sessions
+
+# 1. Clone the repo
+
+git clone https://github.com/your-username/task-dashboard.git
+
+# 2. Install dependencies
+
+cd task-dashboard
+npm install
+
+# 3. Start the dev server
+
+npm run dev
