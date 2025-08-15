@@ -8,12 +8,17 @@ export const SearchBar = () => {
   };
 
   return (
-    <input
-      type="text"
-      value={state.search}
-      onChange={handleChange}
-      placeholder="Search tasks..."
-      className="w-full border px-3 py-2 rounded mb-4"
-    />
+    <label htmlFor="task-search" className="block mb-2 text-sm font-medium">
+      <span className="sr-only">Search Tasks</span>
+      <input
+        id="task-search"
+        type="text"
+        value={state.search}
+        onChange={handleChange}
+        placeholder="Search tasks..."
+        className="w-full border px-3 py-2 rounded mb-4"
+        aria-label="Search tasks"
+      />
+    </label>
   );
 };
