@@ -1,6 +1,7 @@
 import { memo } from 'react';
 import type { Task } from '../types/task';
 import { useTaskContext } from '../hooks/useTaskContext';
+import { TaskCard } from './Card/TaskCard'; // ✅ adjust import path if needed
 
 interface Props {
   task: Task;
@@ -25,12 +26,8 @@ export const TaskItem = memo(({ task, onEdit }: Props) => {
   const isCompleted = task.status === 'completed';
 
   return (
-    <div
-      className="flex justify-between items-center border p-4 rounded shadow-sm mb-2"
-      role="group"
-      aria-labelledby={`task-${task.id}-title`}
-    >
-      <div>
+    <TaskCard>
+      <TaskCard.Header>
         <h3
           id={`task-${task.id}-title`}
           className={`font-medium ${
@@ -39,13 +36,16 @@ export const TaskItem = memo(({ task, onEdit }: Props) => {
         >
           {task.title}
         </h3>
+      </TaskCard.Header>
+
+      <TaskCard.Body>
         <p className="text-sm text-gray-600">{task.description}</p>
         <p className="text-xs mt-1">
           Priority: <span className="capitalize">{task.priority}</span>
         </p>
-      </div>
+      </TaskCard.Body>
 
-      <div className="flex gap-2">
+      <TaskCard.Actions>
         <button
           onClick={handleToggleStatus}
           className="text-sm px-3 py-1 border rounded bg-blue-100 hover:bg-blue-200"
@@ -69,7 +69,7 @@ export const TaskItem = memo(({ task, onEdit }: Props) => {
         >
           Edit
         </button>
-      </div>
-    </div>
+      </TaskCard.Actions>
+    </TaskCard>
   );
 });
