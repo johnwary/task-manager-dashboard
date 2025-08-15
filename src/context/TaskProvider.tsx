@@ -1,4 +1,10 @@
-import { useEffect, useReducer, useMemo, type ReactNode } from 'react';
+import {
+  useEffect,
+  useReducer,
+  useMemo,
+  useState,
+  type ReactNode,
+} from 'react';
 import {
   TaskContext,
   initialState,
@@ -49,6 +55,7 @@ function reducer(state: State, action: Action): State {
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const [loaded, setLoaded] = useState(false); // 👈 New
 
   // ✅ Load tasks from localStorage on mount
   useEffect(() => {
@@ -61,14 +68,19 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
         console.error('Failed to parse localStorage');
       }
     }
+    setLoaded(true); // 👈 Only show UI after this
   }, []);
 
-  // ✅ Save tasks to localStorage on change
+  // ✅ Save to localStorage on task updates
   useEffect(() => {
-    localStorage.setItem('tasks', JSON.stringify(state.tasks));
-  }, [state.tasks]);
+    if (loaded) {
+      localStorage.setItem('tasks', JSON.stringify(state.tasks));
+    }
+  }, [state.tasks, loaded]);
 
   const value = useMemo(() => ({ state, dispatch }), [state]);
+
+  if (!loaded) return null; // 👈 Prevent rendering app until tasks are loaded
 
   return <TaskContext.Provider value={value}>{children}</TaskContext.Provider>;
 };
