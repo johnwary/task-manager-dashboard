@@ -10,20 +10,31 @@ interface Props {
 export const TaskItem = memo(({ task, onEdit }: Props) => {
   const { dispatch } = useTaskContext();
 
-  const toggleStatus = () => {
+  const handleToggleStatus = () => {
     dispatch({ type: 'TOGGLE', payload: task.id });
   };
 
-  const removeTask = () => {
+  const handleDelete = () => {
     dispatch({ type: 'REMOVE', payload: task.id });
   };
 
+  const handleEdit = () => {
+    onEdit(task);
+  };
+
+  const isCompleted = task.status === 'completed';
+
   return (
-    <div className="flex justify-between items-center border p-4 rounded shadow-sm mb-2">
+    <div
+      className="flex justify-between items-center border p-4 rounded shadow-sm mb-2"
+      role="group"
+      aria-labelledby={`task-${task.id}-title`}
+    >
       <div>
         <h3
+          id={`task-${task.id}-title`}
           className={`font-medium ${
-            task.status === 'completed' ? 'line-through text-gray-400' : ''
+            isCompleted ? 'line-through text-gray-400' : ''
           }`}
         >
           {task.title}
@@ -33,22 +44,28 @@ export const TaskItem = memo(({ task, onEdit }: Props) => {
           Priority: <span className="capitalize">{task.priority}</span>
         </p>
       </div>
+
       <div className="flex gap-2">
         <button
-          onClick={toggleStatus}
+          onClick={handleToggleStatus}
           className="text-sm px-3 py-1 border rounded bg-blue-100 hover:bg-blue-200"
+          aria-label={isCompleted ? 'Mark as active' : 'Mark as complete'}
         >
-          {task.status === 'active' ? 'Complete' : 'Activate'}
+          {isCompleted ? 'Activate' : 'Complete'}
         </button>
+
         <button
-          onClick={removeTask}
+          onClick={handleDelete}
           className="text-sm px-3 py-1 border rounded bg-red-100 hover:bg-red-200"
+          aria-label="Delete task"
         >
           Delete
         </button>
+
         <button
-          onClick={() => onEdit(task)}
+          onClick={handleEdit}
           className="text-sm px-3 py-1 border rounded bg-yellow-100 hover:bg-yellow-200"
+          aria-label="Edit task"
         >
           Edit
         </button>
