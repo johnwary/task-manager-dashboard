@@ -1,35 +1,61 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useTaskContext } from '../hooks/useTaskContext';
-import type { TaskPriority } from '../types/task';
+import type { TaskPriority, Task } from '../types/task';
 
 const generateId = () => Date.now().toString();
 
-export const TaskForm = () => {
+interface Props {
+  editingTask: Task | null;
+  onFinishEdit: () => void;
+}
+
+export const TaskForm = ({ editingTask, onFinishEdit }: Props) => {
   const { dispatch } = useTaskContext();
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [priority, setPriority] = useState<TaskPriority>('medium');
 
+  useEffect(() => {
+    if (editingTask) {
+      setTitle(editingTask.title);
+      setDescription(editingTask.description);
+      setPriority(editingTask.priority);
+    }
+  }, [editingTask]);
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
     if (!title.trim()) return;
 
     const now = new Date();
-    dispatch({
-      type: 'ADD',
-      payload: {
-        id: generateId(),
-        title: title.trim(),
-        description: description.trim(),
-        priority,
-        status: 'active',
-        createdAt: now,
-        updatedAt: now,
-      },
-    });
 
-    // Reset
+    if (editingTask) {
+      dispatch({
+        type: 'UPDATE',
+        payload: {
+          ...editingTask,
+          title: title.trim(),
+          description: description.trim(),
+          priority,
+          updatedAt: now,
+        },
+      });
+      onFinishEdit();
+    } else {
+      dispatch({
+        type: 'ADD',
+        payload: {
+          id: generateId(),
+          title: title.trim(),
+          description: description.trim(),
+          priority,
+          status: 'active',
+          createdAt: now,
+          updatedAt: now,
+        },
+      });
+    }
+
     setTitle('');
     setDescription('');
     setPriority('medium');
@@ -44,7 +70,6 @@ export const TaskForm = () => {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           className="w-full border px-3 py-2 rounded"
-          placeholder="Enter task title"
           required
         />
       </div>
@@ -56,7 +81,6 @@ export const TaskForm = () => {
           onChange={(e) => setDescription(e.target.value)}
           className="w-full border px-3 py-2 rounded resize-none"
           rows={3}
-          placeholder="Optional"
         />
       </div>
 
@@ -77,7 +101,7 @@ export const TaskForm = () => {
         type="submit"
         className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
       >
-        Add Task
+        {editingTask ? 'Update Task' : 'Add Task'}
       </button>
     </form>
   );

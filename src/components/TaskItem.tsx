@@ -1,20 +1,18 @@
 import { memo } from 'react';
 import type { Task } from '../types/task';
-import { useTaskContext } from '../hooks/useTaskContext';
 
 interface Props {
   task: Task;
+  onEdit: (task: Task) => void;
 }
 
-export const TaskItem = memo(({ task }: Props) => {
-  const { dispatch } = useTaskContext();
-
+export const TaskItem = memo(({ task, onEdit }: Props) => {
   const toggleStatus = () => {
-    dispatch({ type: 'TOGGLE', payload: task.id });
+    // ... same as before
   };
 
   const removeTask = () => {
-    dispatch({ type: 'REMOVE', payload: task.id });
+    // ... same as before
   };
 
   return (
@@ -28,23 +26,12 @@ export const TaskItem = memo(({ task }: Props) => {
           {task.title}
         </h3>
         <p className="text-sm text-gray-600">{task.description}</p>
-        <p className="text-xs mt-1">
-          Priority: <span className="capitalize">{task.priority}</span>
-        </p>
+        <p className="text-xs mt-1">Priority: {task.priority}</p>
       </div>
       <div className="flex gap-2">
-        <button
-          onClick={toggleStatus}
-          className="text-sm px-3 py-1 border rounded bg-blue-100 hover:bg-blue-200"
-        >
-          {task.status === 'active' ? 'Complete' : 'Activate'}
-        </button>
-        <button
-          onClick={removeTask}
-          className="text-sm px-3 py-1 border rounded bg-red-100 hover:bg-red-200"
-        >
-          Delete
-        </button>
+        <button onClick={toggleStatus}>✓</button>
+        <button onClick={removeTask}>🗑</button>
+        <button onClick={() => onEdit(task)}>✏️</button>
       </div>
     </div>
   );

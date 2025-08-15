@@ -1,7 +1,12 @@
 import { useTaskContext } from '../hooks/useTaskContext';
 import { TaskItem } from './TaskItem';
+import type { Task } from '../types/task';
 
-export const TaskList = () => {
+export const TaskList = ({
+  onEditTask,
+}: {
+  onEditTask: (task: Task) => void;
+}) => {
   const { state } = useTaskContext();
   const { tasks, filter, search } = state;
 
@@ -20,7 +25,7 @@ export const TaskList = () => {
   return (
     <div className="mt-4">
       {filteredTasks.map((task) => (
-        <TaskItem key={task.id} task={task} />
+        <TaskItem key={task.id} task={task} onEdit={onEditTask} />
       ))}
     </div>
   );
